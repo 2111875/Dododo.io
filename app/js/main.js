@@ -6,11 +6,12 @@ let player = new Player(
   game.grid,
   (canvas.width / 2).roundTo(game.grid) - game.grid + 256,
   (canvas.height / 2).roundTo(game.grid) - game.grid
-);d
+);
 let test = new LevelEditorBlock();
 socket.on('message',(msg) => {
   alert(msg);
 })
+
 async function loop() {
   requestAnimationFrame(loop);
   c.fillStyle = "#111";
@@ -38,3 +39,8 @@ async function loop() {
   game.camera.y = player.y - game.height / 2 + 45 / 2;
 }
 loop();
+document.addEventListener('onkeydown',(e) => {
+  if(e.key == 'c') {
+    socket.emit('message','a');
+  }
+})

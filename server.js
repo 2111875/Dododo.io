@@ -19,6 +19,6 @@ console.log('a');
 io.on('connection', function(socket){
   socket.on("message", function(message){
     socket.emit("message", message);
-    console.log(message)
+    console.log(message);
   })
 })
