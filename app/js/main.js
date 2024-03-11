@@ -7,6 +7,7 @@ let player = new Player(
   (canvas.width / 2).roundTo(game.grid) - game.grid + 256,
   (canvas.height / 2).roundTo(game.grid) - game.grid
 );
+player.uuid = crypto.randomUUID();
 let otherplayers = [];
 //let test = new LevelEditorBlock();
 async function loop() {
@@ -19,6 +20,10 @@ async function loop() {
     .filter((item) => item.draw());
 
   player.tick();
+  otherplayers.forEach(item => {
+    c.fillStyle = 'red';
+    c.drawImage(player.costumes[0],item.x-game.camera.x,item.y-game.camera.y,item.width,item.height);
+  });
   blocks
     .filter((item) => item.layer > player.layer)
     .filter((item) => item.draw());
@@ -33,10 +38,7 @@ async function loop() {
     mouse.x,
     mouse.y
   );
-  otherplayers.forEach(item => {
-    c.fillStyle = 'red';
-    c.drawImage(player.costumes[0],item.x-game.camera.x,item.y-game.camera.y,item.width,item.height);
-  })
+  
   
 
   game.camera.x = player.x - game.width / 2 + 45 / 2;
@@ -44,11 +46,18 @@ async function loop() {
 }
 loop();
 
-socket.on("UUID",(uuid) => {
- player.uuid = uuid;
-})
-socket.on('message',(message) => {
+socket.on('player',(message) => {
  // alert(message);
   otherplayers = otherplayers.filter(item => item.uuid != message.uuid);
   otherplayers.push(message);
 })
+socket.on("message",(msg) => {
+  alert(msg);
+})
+socket.on('leave',(uuid) => {
+  otherplayers = otherplayers.filter(item => item.uuid != uuid);
+})
+window.onbeforeunload = function()  {
+  socket.emit('leave',player.uuid);
+  player = undefined;
+}

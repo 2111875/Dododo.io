@@ -3,7 +3,6 @@ const express = require("express");
 const socketio = require("socket.io");
 const cors = require('cors');
 const path = require("path");
-const { v4: uuidv4 } = require('uuid');
 const app = express();
 const httpserver = http.Server(app);
 const io = socketio(httpserver);
@@ -17,9 +16,14 @@ console.log('a');
 
 
 io.on('connection', function(socket){
-  socket.emit('UUID',uuidv4());
-  socket.on("message", function(message){
-    socket.broadcast.emit("message", message);
-    console.log(message);
+  socket.on("player", function(message){
+    socket.broadcast.emit("player", message);
+   // console.log(message);
+  })
+  socket.on("message",function(msg) {
+    io.emit("message",msg);
+  })
+  socket.on('leave',function(uuid)  {
+    socket.broadcast.emit('leave',uuid);
   })
 })
