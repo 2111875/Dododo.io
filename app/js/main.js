@@ -6,7 +6,7 @@ let player = new Player(
   game.grid,
   (canvas.width / 2).roundTo(game.grid) - game.grid + 256,
   (canvas.height / 2).roundTo(game.grid) - game.grid
-);
+);d
 let test = new LevelEditorBlock();
 socket.on('message',(msg) => {
   alert(msg);
