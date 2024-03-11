@@ -6,7 +6,7 @@ let player = new Player(
   (canvas.width / 2).roundTo(game.grid) - game.grid + 256,
   (canvas.height / 2).roundTo(game.grid) - game.grid
 );
-//let test = new LevelEditorBlock();
+let test = new LevelEditorBlock();
 
 async function loop() {
   requestAnimationFrame(loop);
@@ -22,12 +22,12 @@ async function loop() {
     .filter((item) => item.layer > player.layer)
     .filter((item) => item.draw());
 
-  //test.draw();
+  test.draw();
   c.fillStyle = "white";
   c.font = "48px Roboto";
 
   c.fillText(
-    blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id),
+    /*blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id)*/test.id,
     mouse.x,
     mouse.y
   );
