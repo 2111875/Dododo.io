@@ -1,0 +1,274 @@
+:root {
+  --bg: #111;
+  --border: #999;
+  --color: #fff;
+  --hoverBG: #333;
+}
+canvas {
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translateX(-50%) translateY(-50%);
+}
+.icon {
+  transition: all .25s ease;
+  cursor:pointer;
+}
+.icon:hover {
+  transform: scale(1.05);
+}
+.icon:active {
+  transform: scale(1);
+}
+* {
+  font-family: 'Roboto';
+  tab-size: 4;
+}
+nav {
+  box-shadow: 0px 0px 5px #999;
+  border-radius: 500px;
+  background-color: var(--bg);
+  color: var(--color);
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 25px;
+  font-size: 100%;
+  text-align: center;
+  border-style: none;
+  font-weight: 750;
+  text-shadow: none;
+  transition: all 0.25s ease;
+  cursor: default;
+  border: 2px solid var(--border);
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100000;
+}
+body {
+    margin: 0;
+    background: #111;
+    background-size: cover;
+    color: var(--color);
+    margin:200px;
+    margin-bottom: 25px;
+    margin-top:100px;
+    text-align: left;
+    overflow:hidden;
+  }
+  
+  #consoleInputContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    font-weight: 750;
+    width: 100%;
+  }
+  
+  #consoleInput {
+    width: calc(100% - 1.5em);
+    background-color: #333;
+    border: none;
+    cursor: text;
+  }
+  
+  #console {
+    position: fixed;
+    bottom: 0px;
+    height: 25%;
+    width: 98%;
+    left: 0px;
+    background-color: #333;
+    text-align: left;
+    padding: 1%;
+    z-index: 1;
+    overflow: scroll;
+    word-wrap: break-word;
+    padding-bottom: 2em;
+  }
+  #console * {
+    font-family:'Fira Code',monospace;
+  }
+  #consoleHeight {
+    user-select: none;
+    position: fixed;
+    bottom:30%;
+    left:0;
+    z-index:2;
+    height:20px;
+    text-align:center;
+    width:100%;
+    background:gray;
+    cursor: ns-resize;
+  }
+  #consoleHeight > a {
+    all:initial;
+    position:absolute;
+    right:20px;
+    font-weight: 750;
+    transform:scale(2);
+    transition:all .25s ease;
+  }
+  #consoleHeight > a:hover {
+    color:aqua;
+    cursor:pointer;
+  }
+  /*#popup {
+    position: fixed;
+    top: 00;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color:black;
+    border:2px solid lime;
+    border-bottom-left-radius:10;
+    border-bottom-right-radius:10;
+    padding:1%;
+    transition:all .25s ease;
+    display:none;
+  }*/
+  
+  #runButton {
+    transform: scale(1.25);
+    transform-origin: center center;
+    position: fixed;
+    font-family: 'Fira Code';
+    top: 20px;
+    right: 20px;
+    z-index: 3;
+  }
+  
+  #runButton:hover {
+    transform: scale(1.35);
+  }
+  
+  #runButton:active {
+    transform: scale(1.2);
+  }
+  
+  .CodeMirror {
+    top: 30px;
+    text-align: left;
+    height: 600%;
+  }
+  
+  #codeText {
+    width: 90%;
+    margin-top: 10%;
+    cursor: text;
+    text-align: left;
+    font-family: 'Fira Code';
+    font-weight: 500;
+    height: 600%;
+  }
+  
+  #show {
+    position: absolute;
+    top: 50px;
+    z-index: 100;
+    text-align: center;
+  }
+  
+  #codeText:hover,
+  #codeText:focus {
+    transform: scale(1);
+  }
+  
+  
+  button,
+  a,
+  input,
+  textarea {
+    all: unset;
+    border-radius: 5px;
+    background-color: var(--bg);
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 100%;
+    text-align: center;
+    border-style: none;
+    font-weight: 750;
+    text-shadow: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: 2px solid var(--border);
+  }
+  
+  select {
+    all: unset;
+    border-radius: 5px;
+    background-color: var(--bg);
+    color: var(--color);
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 100%;
+    text-align: center;
+    border-style: none;
+    font-weight: 750;
+    text-shadow: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: 2px solid var(--border);
+  }
+  
+  align {
+    position: absolute;
+  
+  }
+  
+  align[left] {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  align[top] {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  align[withText] {
+    text-align: center;
+  }
+  
+  align[both] {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+  
+  
+  
+  textarea,
+  input {
+    resize: both;
+    text-align: left;
+    padding: 5px 5px;
+    min-height: calc(1em + 2px);
+    min-width: calc(1em + 2px);
+  }
+  
+  button:hover,
+  a:hover,
+  /* input:hover, */
+  select:hover
+  
+  /*,textarea:hover*/
+    {
+    /* background-color: var(--hoverBG); */
+    transform: scale(1.05);
+  }
+  
+  /*input:focus,textarea:focus {
+    /* background-color: var(--bg); 
+    /* border:2px solid var(--border); 
+    transform:scale(1.05);
+  }*/
+  button:active,
+  a:active,
+  select:active {
+    transform: scale(1);
+  }
