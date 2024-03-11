@@ -143,7 +143,6 @@ class Player {
   }
   tick() {
     //Testin
-    this.name++;
     socket.emit('player',{[this.uuid]:{x:this.x,y:this.y,width:this.width,height:this.height,name:this.name}});
 
 

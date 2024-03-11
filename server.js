@@ -16,14 +16,15 @@ console.log('a');
 
 
 io.on('connection', function(socket){
+  socket.join("ROOM")
   socket.on("player", function(message){
-    socket.broadcast.emit("player", message);
+    socket.to("ROOM").emit("player", message);
    // console.log(message);
   })
   socket.on("message",function(msg) {
-   socket.broadcast.emit("message",msg);
+   socket.to("ROOM").emit("message",msg);
   })
   socket.on('leave',function(uuid)  {
-    socket.broadcast.emit('leave',uuid);
+    socket.to("ROOM").emit('leave',uuid);
   })
 })

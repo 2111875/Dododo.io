@@ -21,10 +21,6 @@ async function loop() {
 
   player.tick();
   
-  /*otherplayers.forEach(item => {
-    c.fillStyle = 'red';
-    c.drawImage(player.costumes[0],item.x-game.camera.x,item.y-game.camera.y,item.width,item.height);
-  });*/
   Object.keys(otherplayers).forEach(item => {
     let e= otherplayers[item];
     c.drawImage(player.costumes[0],e.x-game.camera.x,e.y-game.camera.y,e.width,e.height);
