@@ -5,6 +5,9 @@ game.grid = 45;
 game.camera = {};
 game.camera.x = 0;
 game.camera.y = 0;
+let room = function() {
+  return location.search.replace('?','');
+}
 Number.prototype.interp = function(y,a) {
   a *= game.time;
   return this * (1 - a) + y * a;
@@ -44,6 +47,9 @@ document.onkeydown = function (e) {
   window.key[e.key] = true;
   if(e.key == 't') {
     $('#messageInput').focus();
+  }
+  if(e.key == 'g') {
+    socket.emit('joinRoom',room());
   }
 
 };

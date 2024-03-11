@@ -26,10 +26,7 @@ class Player {
 
     //keybinds
     document.addEventListener("keydown", async (e) => {
-      if (e.key == "g") {
-        game.time !== 1 ? (game.time = 1) : (game.time = 0.25);
-      }
-      
+     
     });
     //costumes
     this.costumes = [];
@@ -143,7 +140,7 @@ class Player {
   }
   tick() {
     //Testin
-    socket.emit('player',{[this.uuid]:{x:this.x,y:this.y,width:this.width,height:this.height,name:this.name}});
+    socket.emit('player',{[this.uuid]:{x:this.x,y:this.y,width:this.width,height:this.height,name:this.name}},room());
 
 
     

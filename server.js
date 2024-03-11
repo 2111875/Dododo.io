@@ -12,19 +12,20 @@ app.use(cors());
 app.use(express.static(gamedirectory));
 
 httpserver.listen(3000);
-console.log('a');
 
 
 io.on('connection', function(socket){
-  socket.join("ROOM")
-  socket.on("player", function(message){
-    socket.to("ROOM").emit("player", message);
+  socket.on("joinRoom",(room) => {
+    socket.join(room);
+  })
+  socket.on("player", function(message,room){
+    socket.to(room).emit("player", message);
    // console.log(message);
   })
-  socket.on("message",function(msg) {
-   socket.to("ROOM").emit("message",msg);
+  socket.on("message",function(msg,room) {
+   socket.to(room).emit("message",msg);
   })
-  socket.on('leave',function(uuid)  {
-    socket.to("ROOM").emit('leave',uuid);
+  socket.on('leave',function(uuid,room)  {
+    socket.to(room).emit('leave',uuid);
   })
 })
