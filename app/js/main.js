@@ -1,5 +1,6 @@
 //  pug.initConsole();
 // console.log(blockTextures.searchById(3));
+const socket = io();
 let player = new Player(
   game.grid,
   game.grid,
@@ -7,7 +8,9 @@ let player = new Player(
   (canvas.height / 2).roundTo(game.grid) - game.grid
 );
 let test = new LevelEditorBlock();
-
+socket.on('message',(msg) => {
+  alert(msg);
+})
 async function loop() {
   requestAnimationFrame(loop);
   c.fillStyle = "#111";
