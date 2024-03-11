@@ -1,4 +1,5 @@
 window.game = {};
+window.socket = io();
 game.time = 1;
 game.grid = 45;
 game.camera = {};

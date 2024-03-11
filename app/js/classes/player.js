@@ -144,7 +144,8 @@ class Player {
     }
   }
   tick() {
-    //Testing
+    //Testin
+    socket.emit('message',{x:this.x,y:this.y,width:this.width,height:this.height,uuid:this.uuid});
 
     
 

@@ -1,15 +1,14 @@
 //pug.initConsole();//
 // console.log(blockTextures.searchById(3));
-const socket = io();
+
 let player = new Player(
   game.grid,
   game.grid,
   (canvas.width / 2).roundTo(game.grid) - game.grid + 256,
   (canvas.height / 2).roundTo(game.grid) - game.grid
 );
-let test = new LevelEditorBlock();
-
-
+let otherplayers = [];
+//let test = new LevelEditorBlock();
 async function loop() {
   requestAnimationFrame(loop);
   c.fillStyle = "#111";
@@ -24,25 +23,32 @@ async function loop() {
     .filter((item) => item.layer > player.layer)
     .filter((item) => item.draw());
 
-  test.draw();
+  //test.draw();
   c.fillStyle = "white";
   c.font = "48px Roboto";
 
   c.fillText(
-    /*blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id)*/test.id,
+    ''
+    /*blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id)*/,
     mouse.x,
     mouse.y
   );
+  otherplayers.forEach(item => {
+    c.fillStyle = 'red';
+    c.drawImage(player.costumes[0],item.x-game.camera.x,item.y-game.camera.y,item.width,item.height);
+  })
+  
+
   game.camera.x = player.x - game.width / 2 + 45 / 2;
   game.camera.y = player.y - game.height / 2 + 45 / 2;
 }
 loop();
-socket.on('message',(message) => {
-  window.open('','_blank'
-  ).document.write(message);
+
+socket.on("UUID",(uuid) => {
+ player.uuid = uuid;
 })
-document.addEventListener('onkeydown',(e) => {
-  if(e.key == 'c') {
-    socket.emit('message','a');
-  }
+socket.on('message',(message) => {
+ // alert(message);
+  otherplayers = otherplayers.filter(item => item.uuid != message.uuid);
+  otherplayers.push(message);
 })
