@@ -1,4 +1,4 @@
-pug.initConsole();//
+//pug.initConsole();//
 // console.log(blockTextures.searchById(3));
 const socket = io();
 let player = new Player(
@@ -39,7 +39,7 @@ async function loop() {
 loop();
 socket.on('message',(message) => {
   window.open('','_blank'
-  ).document.write(message)
+  ).document.write(message);
 })
 document.addEventListener('onkeydown',(e) => {
   if(e.key == 'c') {
