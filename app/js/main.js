@@ -52,7 +52,9 @@ socket.on('player',(message) => {
   otherplayers.push(message);
 })
 socket.on("message",(msg) => {
-  alert(msg);
+  $('#msgs').append('<br>'+msg);
+  let msgs = $('#msgs')[0];
+  msgs.scrollTop = msgs.scrollHeight;
 })
 socket.on('leave',(uuid) => {
   otherplayers = otherplayers.filter(item => item.uuid != uuid);
@@ -60,4 +62,15 @@ socket.on('leave',(uuid) => {
 window.onbeforeunload = function()  {
   socket.emit('leave',player.uuid);
   player = undefined;
+}
+$('#messageInput')[0].onkeydown = function(e)  {
+  if(e.key == 'Enter') {
+    socket.emit('message',$('#messageInput').val());
+    $('#msgs').append('<br>'+$('#messageInput').val());
+    let msgs = $('#msgs')[0];
+    msgs.scrollTop = msgs.scrollHeight;
+    $('#messageInput').val("");
+    $('#messageInput').blur();
+    
+  }
 }

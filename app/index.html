@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Dododo.io</title>
-    <script src= "https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.min.js"></script>
-    <script src="./js/jquery.js"></script>
-    <link href="./css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="shortcut icon" href="images/icon.png" type="image/x-icon" />
-    <!-- Pre classes -->
-    <script src="./js/pug.js"></script>
-    <script src="./js/game.js"></script>
-    <!-- Classes -->
-    <script src="./js/classes/blocks.js"></script>
-    <script src="./js/classes/player.js"></script>
-  </head>
 
-  <body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Dododo.io</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.min.js"></script>
+  <script src="./js/jquery.js"></script>
+  <link href="./css/style.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="pragma" content="no-cache" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="shortcut icon" href="images/icon.png" type="image/x-icon" />
+  <!-- Pre classes -->
+  <script src="./js/pug.js"></script>
+  <script src="./js/game.js"></script>
+  <!-- Classes -->
+  <script src="./js/classes/blocks.js"></script>
+  <script src="./js/classes/player.js"></script>
+</head>
 
-    <div id="messageBox"><div id="msgs"></div><div id="messageInput"></div></div>
-  </body>
+<body>
 
-  <script src="./js/main.js"></script>
+  <div id="messageBox">
+    <div id="msgs"></div><input id="messageInput" placeholder="Press [T] to chat">
+  </div>
+</body>
+
+<script src="./js/main.js"></script>
+
 </html>

@@ -21,7 +21,7 @@ io.on('connection', function(socket){
    // console.log(message);
   })
   socket.on("message",function(msg) {
-    io.emit("message",msg);
+   socket.broadcast.emit("message",msg);
   })
   socket.on('leave',function(uuid)  {
     socket.broadcast.emit('leave',uuid);

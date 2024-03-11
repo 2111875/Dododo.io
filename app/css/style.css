@@ -4,6 +4,25 @@
   --color: #fff;
   --hoverBG: #333;
 }
+#messageBox {
+  position:fixed;
+  bottom:10%;
+  width:200px;
+  height:200px;
+  background-color:transparent;
+}
+#messageBox > #msgs {
+  overflow:scroll;
+  height:80%;
+  width:100%;
+  color:yellow;
+}
+#messageBox > #msgs::-webkit-scrollbar {
+  display:none;
+}
+#messageBox > #messageInput {
+  width:100%;
+}
 canvas {
   position:fixed;
   top:50%;

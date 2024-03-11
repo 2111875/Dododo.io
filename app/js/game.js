@@ -38,9 +38,17 @@ document.oncontextmenu = function(e) {
 }
 document.onmousedown = document.onmousemove;
 document.onmouseup = document.onmousedown;
+
+
 document.onkeydown = function (e) {
   window.key[e.key] = true;
+  if(e.key == 't') {
+    $('#messageInput').focus();
+  }
+
 };
+
+
 document.onkeyup = function (e) {
   window.key[e.key] = false;
 };
