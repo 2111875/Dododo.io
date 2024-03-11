@@ -52,8 +52,11 @@ document.onkeydown = function (e) {
     socket.emit('joinRoom',room());
   }
 
+
+
 };
 
+//socket.emit('joinRoom',room());
 
 document.onkeyup = function (e) {
   window.key[e.key] = false;

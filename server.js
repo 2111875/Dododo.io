@@ -3,9 +3,15 @@ const express = require("express");
 const socketio = require("socket.io");
 const cors = require('cors');
 const path = require("path");
+const { SocketAddress } = require("net");
 const app = express();
 const httpserver = http.Server(app);
-const io = socketio(httpserver);
+const io = socketio(httpserver, {
+  cors: {
+    origin: "https://example.com",
+    methods: ["GET", "POST"]
+  }
+});
 
 const gamedirectory = path.join(__dirname, "app");
 app.use(cors());
@@ -27,5 +33,6 @@ io.on('connection', function(socket){
   })
   socket.on('leave',function(uuid,room)  {
     socket.to(room).emit('leave',uuid);
+    socket.leave(room);
   })
 })

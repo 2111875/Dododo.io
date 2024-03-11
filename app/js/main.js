@@ -48,7 +48,15 @@ loop();
 
 socket.on('player', (message) => {
   let msguuid = Object.keys(message)[0];
-  otherplayers[msguuid] = message[msguuid];
+  if (!otherplayers[msguuid]) otherplayers[msguuid] = message[msguuid];
+  else {
+    otherplayers[msguuid].x = otherplayers[msguuid].x.interp(message[msguuid].x, .2);
+    otherplayers[msguuid].y = otherplayers[msguuid].y.interp(message[msguuid].y, .2);
+    otherplayers[msguuid].width = message[msguuid].width;
+    otherplayers[msguuid].height = message[msguuid].height;
+    otherplayers[msguuid].name = message[msguuid].name;
+  }
+
 })
 socket.on("message", (msg) => {
   $('#msgs').append('<br>' + msg);
