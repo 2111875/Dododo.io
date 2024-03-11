@@ -8,7 +8,7 @@ let player = new Player(
   (canvas.height / 2).roundTo(game.grid) - game.grid
 );
 player.uuid = crypto.randomUUID();
-let otherplayers = [];
+let otherplayers = {};
 //let test = new LevelEditorBlock();
 async function loop() {
   requestAnimationFrame(loop);
@@ -20,24 +20,30 @@ async function loop() {
     .filter((item) => item.draw());
 
   player.tick();
-  otherplayers.forEach(item => {
+  
+  /*otherplayers.forEach(item => {
     c.fillStyle = 'red';
     c.drawImage(player.costumes[0],item.x-game.camera.x,item.y-game.camera.y,item.width,item.height);
-  });
+  });*/
+  Object.keys(otherplayers).forEach(item => {
+    let e= otherplayers[item];
+    c.drawImage(player.costumes[0],e.x-game.camera.x,e.y-game.camera.y,e.width,e.height);
+    c.fillStyle = "white";
+    c.font = "12px Roboto";
+  
+    c.fillText(
+      e.name
+      /*blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id)*/,
+      e.x-game.camera.x+e.width/2-c.measureText(e.name).width/2,
+      e.y-game.camera.y
+    );
+  })
   blocks
     .filter((item) => item.layer > player.layer)
     .filter((item) => item.draw());
 
   //test.draw();
-  c.fillStyle = "white";
-  c.font = "48px Roboto";
-
-  c.fillText(
-    ''
-    /*blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id)*/,
-    mouse.x,
-    mouse.y
-  );
+ 
   
   
 
@@ -47,9 +53,9 @@ async function loop() {
 loop();
 
 socket.on('player',(message) => {
+  let msguuid = Object.keys(message)[0];
  // alert(message);
-  otherplayers = otherplayers.filter(item => item.uuid != message.uuid);
-  otherplayers.push(message);
+  otherplayers[msguuid] = message[msguuid];
 })
 socket.on("message",(msg) => {
   $('#msgs').append('<br>'+msg);
@@ -57,7 +63,7 @@ socket.on("message",(msg) => {
   msgs.scrollTop = msgs.scrollHeight;
 })
 socket.on('leave',(uuid) => {
-  otherplayers = otherplayers.filter(item => item.uuid != uuid);
+  delete otherplayers[uuid];
 })
 window.onbeforeunload = function()  {
   socket.emit('leave',player.uuid);

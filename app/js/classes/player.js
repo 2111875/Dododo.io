@@ -21,7 +21,7 @@ class Player {
     this.tickNum = 0;
     this.acceleration = 1.5;
     this.dir = 0;
-    this.exists = true;
+    this.name = 0;
     // messing around
 
     //keybinds
@@ -143,7 +143,8 @@ class Player {
   }
   tick() {
     //Testin
-    socket.emit('player',{x:this.x,y:this.y,width:this.width,height:this.height,uuid:this.uuid});
+    this.name++;
+    socket.emit('player',{[this.uuid]:{x:this.x,y:this.y,width:this.width,height:this.height,name:this.name}});
 
 
     
