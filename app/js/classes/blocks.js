@@ -7,8 +7,13 @@ blockTextures.searchById = function (id) {
 game.map = {
   cols: 9,
   rows: 9,
-  tsize: 12,
-  tiles: [[],[],[],[null,null,null,null,null,null,null,null,null,null,11,12],[null,null,null,null,null,null,null,null,null,42,43,44,45],[null,null,null,null,null,null,null,null,null,74,75,76,77,78,79,80,null,null,null,563,564,565,566,567],[null,null,null,null,null,null,null,null,null,106,107,108,109,110,111,112,null,null,null,595,596,597,598,599],[null,null,null,null,null,null,null,null,137,138,139,140,141,142,143,144,null,null,null,627,628,null,630,631],[null,null,null,null,null,null,null,null,169,170,171,172,173,174,175,null,null,null,null,659,660,661,662,663],[null,null,null,null,null,null,null,null,201,202,203,204,205,206,207,null,null,null,null,691,692,693,694,695],null,null,[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,51,52,53],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,83,84,85],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,115,116,117]],
+  tsize: 64,
+  tiles: [
+    [1,2,3,4,5,6,7,8],
+    [9,10,11,12,13,14,15,16],
+    [17,18,19,20,21,22,23,24],
+    [25,26,27,28,29,30,31,32]
+  ],
   getTile: function (col, row) {
     return this.tiles[row][col];
   },
@@ -19,32 +24,12 @@ blockTextures.block.src = "./images/block.png";*/
 let tile1 = "./images/tiles.png";
 let tile2 = "./images/First Asset pack.png";
 blockTextures.tileMap = document.createElement("img");
-blockTextures.tileMap.src = tile2;
+blockTextures.tileMap.src = tile1;
 
 blocksColliders = [
   {
     id: [203,171],
     hitboxes: [{ width: game.grid / 2, height: game.grid, y: 0, x: -1 }],
-  },
-  {
-    id: [204,172],
-    hitboxes: [{ width: game.grid / 2, height: game.grid , y: 0, x: 24 }],
-  },
-  {
-    id: [205,202,170,173],
-    hitboxes: [{ width: game.grid, height: game.grid, y: 0, x: 0 }]
-  },
-  {
-    id: [12],
-    hitboxes: [{ width: game.grid/4, height: game.grid/10, y: 30, x: 0 }]
-  },
-  {
-    id: [11],
-    hitboxes: [{ width: game.grid/4, height: game.grid/10, y: 30, x: 33 }]
-  },
-  {
-    id: [106,107,108,109],
-    hitboxes: [{ width: game.grid, height: game.grid/10, y: 0, x: 0 }]
   }
 
 ];
@@ -100,8 +85,8 @@ class Block {
 
     c.drawImage(
       blockTextures.tileMap,
-      ((this.id - 1) % 32) * game.map.tsize,
-      (((this.id - 1) / 32) | 0) * game.map.tsize,
+      ((this.id - 1) % 8) * game.map.tsize,
+      (((this.id - 1) / 8) | 0) * game.map.tsize,
       game.map.tsize,
       game.map.tsize,
       -this.width / 2,
