@@ -47,5 +47,7 @@ io.on('connection', function(socket){
   socket.on('leave',function(uuid,room)  {
     socket.to(room).emit('leave',uuid);
     socket.leave(room);
+    rooms[room]--;
   })
+  
 })

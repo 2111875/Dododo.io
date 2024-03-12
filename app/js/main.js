@@ -8,7 +8,6 @@ let player = new Player(
   (canvas.height / 2).roundTo(game.grid) - game.grid
 );
 player.name = window.username;
-player.uuid = crypto.randomUUID();
 let otherplayers = {};
 //let test = new LevelEditorBlock();
 async function loop() {
@@ -64,10 +63,10 @@ socket.on("message", (msg) => {
   msgs.scrollTop = msgs.scrollHeight;
 })
 socket.on('leave', (uuid) => {
-  delete otherplayers[uuid];
+  delete otherplayers[uuid];  
 })
 window.onbeforeunload = function () {
-  socket.emit('leave', player.uuid, room);
+  socket.emit('leave', uuid, room);
   player = undefined;
 }
 $('#messageInput')[0].onkeydown = function (e) {

@@ -7,6 +7,8 @@ game.camera.x = 0;
 game.camera.y = 0;
 window.key = pug.defaultObject();
 window.mouse = pug.defaultObject(0);
+window.uuid = crypto.randomUUID();
+
 
 window.room = false;
 
@@ -15,6 +17,10 @@ window.search = function () {
   return location.search.replace('?', '');
 }
 function waiting(rooom) {
+  window.onbeforeunload = function () {
+    socket.emit('leave', uuid, room);
+    player = undefined;
+  }
   $('#startMenu')[0].remove();
   window.room = rooom;
   socket.emit('joinRoom', room);
@@ -61,6 +67,7 @@ function start() {
   socket.off('gameStart');
   socket.off('meHost');
   socket.off('message');
+  socket.off('leave');
   $('#waitingMenu').remove();
   window.canvas = document.createElement("canvas");
   canvas.height = $(window).height().roundTo(game.grid);
