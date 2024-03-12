@@ -33,8 +33,8 @@ blockTextures.tileMap.src = tile1;
 
 blocksColliders = [
   {
-    id: [203, 171],
-    hitboxes: [{ width: game.grid / 2, height: game.grid, y: 0, x: -1 }],
+    id: [27],
+    hitboxes: [{ width: game.grid, height: game.grid, y: 0, x:0 }]
   }
 
 ];
