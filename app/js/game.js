@@ -105,7 +105,6 @@ window.onload = function(e){
   if (room()) {
     //alert('a');
     start(room());
-  
   }
 }
 
