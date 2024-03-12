@@ -13,11 +13,13 @@ window.search = function () {
   //return '1';
   return location.search.replace('?', '');
 }
-
-function start(rooom) {
+function waiting(rooom) {
   $('#menu')[0].remove();
   window.room = rooom;
   socket.emit('joinRoom', room);
+  start();
+}
+function start() {
   window.canvas = document.createElement("canvas");
   canvas.height = $(window).height().roundTo(game.grid);
   canvas.tabIndex = 1;
@@ -99,15 +101,11 @@ document.onkeydown = function (e) {
     $('#messageInput').focus();
     e.preventDefault(); // Prevent the default action of the 't' key
   }
- 
-
-
-
 };
 window.onload = function(e){
   if (search()) {
     //alert('a');
-    start(search());
+    waiting(search());
   }
 }
 

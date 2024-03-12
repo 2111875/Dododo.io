@@ -21,9 +21,10 @@ httpserver.listen(3000);
 
 
 io.on('connection', function(socket){
+  console.log('A user joined with id: '+socket.id);
   socket.on("joinRoom",(room) => {
     socket.join(room);
-    console.log('A user joined room: '+room);
+    console.log('A user with id: '+socket.id+' joined room: '+room);
   })
   socket.on("player", function(message,room){
     socket.to(room).emit("player", message);
