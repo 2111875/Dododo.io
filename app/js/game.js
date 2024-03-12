@@ -12,8 +12,9 @@ window.room = function () {
   return location.search.replace('?', '');
 }
 
-function start() {
-  $('#StartButton')[0].remove();
+function start(room) {
+  $('#menu')[0].remove();
+  socket.emit('joinRoom', room);
   window.canvas = document.createElement("canvas");
   canvas.height = $(window).height().roundTo(game.grid);
   canvas.tabIndex = 1;
@@ -103,11 +104,8 @@ document.onkeydown = function (e) {
 window.onload = function(e){
   if (room()) {
     //alert('a');
-    socket.emit('joinRoom', room());
-    start();
+    start(room());
   
-  } else {
-    location.search = prompt('Room to join?');
   }
 }
 

@@ -24,6 +24,17 @@
 #messageBox > #messageInput {
   width:100%;
 }
+#leaveButton {
+  position:fixed;
+  top:10px;
+  left:10px;
+}
+#startButton {
+  position:fixed;
+  top:50%;
+  left:50%;
+  translate: -50% -50%;
+}
 canvas {
   position:fixed;
   top:50%;
