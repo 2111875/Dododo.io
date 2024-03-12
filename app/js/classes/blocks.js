@@ -45,7 +45,10 @@ class Block {
     this.y = y.roundTo(game.grid);
     this.width = game.grid;
     this.height = game.grid;
-
+    this.type = 'ground';
+    if(id == 27) {
+      this.type = 'block';
+    }
     this.isCollider = blocksColliders.some((item) => {
       if (typeof item.id == 'object') {
         return item.id.includes(id);
@@ -79,8 +82,7 @@ class Block {
   }
   draw() {
     c.imageSmoothingEnabled = false;
-    //this.layer = (this.y < player.y ? 0 : 4);
-    this.layer = [171, 172, 138, 139, 140, 141, 106, 107, 108, 109, 110, 111, 74, 75, 76, 77, 78, 79, 42, 43, 44, 45].includes(this.id) ? 4 : 0;
+    this.layer = (this.y > player.y && this.type == 'block' ? 4 : 0);
     c.save();
     c.translate(
       this.x - game.camera.x + this.width / 2,
