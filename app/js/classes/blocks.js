@@ -1,12 +1,9 @@
 window.blockTextures = {};
 
 window.blocks = [];
-blockTextures.searchById = function (id) {
-  return this[Object.keys(this)[Math.round(id / 2)]];
-};
 game.map = {
-  cols: 9,
-  rows: 9,
+  cols: 8,
+  rows: 4,
   tsize: 64,
   tiles: [
     [1,2,3,4,5,6,7,8],

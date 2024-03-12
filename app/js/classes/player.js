@@ -21,7 +21,7 @@ class Player {
     this.tickNum = 0;
     this.acceleration = 1.5;
     this.dir = 0;
-    this.name = prompt('Username?');
+    this.name = Math.round(Math.random()*100);
     // messing around
 
     //keybinds
