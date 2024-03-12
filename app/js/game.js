@@ -5,7 +5,9 @@ game.grid = 45;
 game.camera = {};
 game.camera.x = 0;
 game.camera.y = 0;
+window.IsInRoom = false;
 let room = function() {
+  if(!window.IsInRoom) return "NoRoom";
   return location.search.replace('?','');
 }
 Number.prototype.interp = function(y,a) {
@@ -42,13 +44,16 @@ document.oncontextmenu = function(e) {
 document.onmousedown = document.onmousemove;
 document.onmouseup = document.onmousedown;
 
-
-document.onkeydown = function (e) {
+canvas.onkeydown = function (e) {
   window.key[e.key] = true;
+}
+document.onkeydown = function (e) {
+  if(!$('#messageInput')[0].hasFocus()) window.key[e.key] = true;
   if(e.key == 't') {
     $('#messageInput').focus();
   }
   if(e.key == 'g') {
+    window.IsInRoom = true;
     socket.emit('joinRoom',room());
   }
 
