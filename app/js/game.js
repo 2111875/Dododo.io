@@ -62,6 +62,12 @@ function start() {
       let mainScript = document.createElement('script');
       mainScript.src = "./js/main.js";
       document.documentElement.appendChild(mainScript);
+      mainScript.onload = function(e) {
+        document.body.appendChild($(`<button id='leaveButton'>Leave</button>`)[0]);
+        $('#leaveButton').click(function(e) {
+          confirm('Are you sure you want to leave?') ? location.search = '' : null;
+        })
+      }
     }
   }
 }
@@ -89,9 +95,7 @@ document.onkeydown = function (e) {
     $('#messageInput').focus();
     e.preventDefault(); // Prevent the default action of the 't' key
   }
-  if(e.key == 'p') {
-    
-  }
+ 
 
 
 
