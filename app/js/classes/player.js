@@ -21,13 +21,15 @@ class Player {
     this.tickNum = 0;
     this.acceleration = 1.5;
     this.dir = 0;
-    this.name = 0;
+    this.name = prompt('Username?');
     // messing around
 
     //keybinds
     document.addEventListener("keydown", async (e) => {
-     
-    });
+     if(e.key == 'u') {
+      this.name = prompt('Username?');
+     }
+     });
     //costumes
     this.costumes = [];
     this.costumes.push(new Image());

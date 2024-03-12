@@ -25,6 +25,7 @@ c.imageSmoothingEnabled = true;
 document.documentElement.appendChild(canvas);
 window.key = pug.defaultObject();
 window.mouse = pug.defaultObject(0);
+
 window.keyBindings = {
   get walkX() {
     return (key.d || key.ArrowRight) - (key.a || key.ArrowLeft);
@@ -48,7 +49,7 @@ canvas.onkeydown = function (e) {
   window.key[e.key] = true;
 }
 document.onkeydown = function (e) {
-  if(!$('#messageInput')[0].hasFocus()) window.key[e.key] = true;
+  window.key[e.key] = true;
   if(e.key == 't') {
     $('#messageInput').focus();
   }
