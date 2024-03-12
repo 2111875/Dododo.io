@@ -19,19 +19,23 @@ app.use(express.static(gamedirectory));
 
 httpserver.listen(3000);
 
-
+let rooms = {};
 io.on('connection', function(socket){
+
   console.log('A user joined with id: '+socket.id);
   socket.on("joinRoom",(room) => {
     socket.join(room);
     console.log('A user with id: '+socket.id+' joined room: '+room);
+    rooms[room] ? rooms[room]++ : rooms[room] = 1;
+    console.log('Amount of players in room \"'+room+'\": '+rooms[room]);
+    io.to(room).emit('message','Somebody joined the game');
   })
   socket.on("player", function(message,room){
     socket.to(room).emit("player", message);
    // console.log(message);
   })
   socket.on("message",function(msg,room) {
-   socket.to(room).emit("message",msg);
+   io.to(room).emit("message",msg);
   })
   socket.on('leave',function(uuid,room)  {
     socket.to(room).emit('leave',uuid);

@@ -29,7 +29,25 @@
   top:10px;
   left:10px;
 }
-#menu {
+
+#waitingMenu {
+  width:400px;
+}
+#usernameInput {
+  width:calc(80%);
+}
+#waitingChatBox {
+  height:200px;
+  width:100%;
+  border:2px solid var(--border);
+  color:yellow;
+  overflow:scroll;
+  border-radius:5px;
+}
+#waitingInputBox {
+  width:calc(100% - 10px);
+}
+.menu {
   position:fixed;
   top:50%;
   left:50%;

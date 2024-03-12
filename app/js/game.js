@@ -14,12 +14,41 @@ window.search = function () {
   return location.search.replace('?', '');
 }
 function waiting(rooom) {
-  $('#menu')[0].remove();
+  $('#startMenu')[0].remove();
   window.room = rooom;
   socket.emit('joinRoom', room);
-  start();
+  document.body.appendChild($(`<div id='waitingMenu' class='menu'></div>`)[0]);
+  $('#waitingMenu').append(`<input id='usernameInput' placeholder='Username?'><button id='waitingJoinBtn'>Join</button>`);
+  $('#waitingJoinBtn').hide();
+  $('#waitingJoinBtn').slideDown();
+
+  $('#usernameInput').css('width',400-$('#waitingJoinBtn').width()-28);
+  $('#usernameInput').on('input',function(e) {
+    window.username = $('#usernameInput').val();
+  })
+  $('#waitingMenu').append(`<div id='waitingChatBox'></div><input id='waitingInputBox' placeholder='Message'>`);
+  $('#waitingJoinBtn').on('click',function(e) {
+    if(window.username) {
+      start();
+    } else {
+      alert('please input valid username');
+    }
+  })
+  $('#waitingInputBox').on('keydown',function(e) {
+    if(e.key =='Enter') {
+      socket.emit('message',username+':'+$('#waitingInputBox').val(),room);
+      $('#waitingInputBox').val("");
+    }
+  })
+  socket.on('message',(message) => {
+    $('#waitingChatBox').append(message+'<br>');
+    $('#waitingChatBox')[0].scrollTop = $('#waitingChatBox')[0].scrollHeight;
+  })
+  //start();
 }
 function start() {
+  socket.off('message');
+  $('#waitingMenu')[0].remove();
   window.canvas = document.createElement("canvas");
   canvas.height = $(window).height().roundTo(game.grid);
   canvas.tabIndex = 1;

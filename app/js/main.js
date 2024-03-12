@@ -7,7 +7,7 @@ let player = new Player(
   (canvas.width / 2).roundTo(game.grid) - game.grid + 256,
   (canvas.height / 2).roundTo(game.grid) - game.grid
 );
-
+player.name = window.username;
 player.uuid = crypto.randomUUID();
 let otherplayers = {};
 //let test = new LevelEditorBlock();
@@ -19,22 +19,22 @@ async function loop() {
   blocks
     .filter((item) => item.layer < player.layer)
     .filter((item) => item.draw());
-
+    Object.keys(otherplayers).forEach(item => {
+      let e = otherplayers[item];
+      c.drawImage(player.costumes[0], e.x - game.camera.x, e.y - game.camera.y, e.width, e.height);
+      c.fillStyle = "white";
+      c.font = "12px Roboto";
+  
+      c.fillText(
+        e.name
+        /*blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id)*/,
+        e.x - game.camera.x + e.width / 2 - c.measureText(e.name).width / 2,
+        e.y - game.camera.y
+      );
+    })
   player.tick();
 
-  Object.keys(otherplayers).forEach(item => {
-    let e = otherplayers[item];
-    c.drawImage(player.costumes[0], e.x - game.camera.x, e.y - game.camera.y, e.width, e.height);
-    c.fillStyle = "white";
-    c.font = "12px Roboto";
-
-    c.fillText(
-      e.name
-      /*blocks.filter(item => item.x == (mouse.x+game.camera.x-game.grid/2).roundTo(game.grid) && item.y == (mouse.y+game.camera.y-game.grid/2).roundTo(game.grid)).map(item => item.id)*/,
-      e.x - game.camera.x + e.width / 2 - c.measureText(e.name).width / 2,
-      e.y - game.camera.y
-    );
-  })
+  
   blocks
     .filter((item) => item.layer > player.layer)
     .filter((item) => item.draw());
@@ -72,10 +72,10 @@ window.onbeforeunload = function () {
 }
 $('#messageInput')[0].onkeydown = function (e) {
   if (e.key == 'Enter') {
-    socket.emit('message', $('#messageInput').val(), room);
-    $('#msgs').append('<br>' + $('#messageInput').val());
+    socket.emit('message',player.name+':'+ $('#messageInput').val(), room);
+    /*$('#msgs').append('<br>' + $('#messageInput').val());
     let msgs = $('#msgs')[0];
-    msgs.scrollTop = msgs.scrollHeight;
+    msgs.scrollTop = msgs.scrollHeight;*/
     $('#messageInput').val("");
     $('#messageInput').blur();
     canvas.focus();
