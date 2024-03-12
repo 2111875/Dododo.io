@@ -67,12 +67,12 @@ socket.on('leave', (uuid) => {
   delete otherplayers[uuid];
 })
 window.onbeforeunload = function () {
-  socket.emit('leave', player.uuid, room());
+  socket.emit('leave', player.uuid, room);
   player = undefined;
 }
 $('#messageInput')[0].onkeydown = function (e) {
   if (e.key == 'Enter') {
-    socket.emit('message', $('#messageInput').val(), room());
+    socket.emit('message', $('#messageInput').val(), room);
     $('#msgs').append('<br>' + $('#messageInput').val());
     let msgs = $('#msgs')[0];
     msgs.scrollTop = msgs.scrollHeight;

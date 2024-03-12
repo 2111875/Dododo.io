@@ -7,13 +7,16 @@ game.camera.x = 0;
 game.camera.y = 0;
 window.key = pug.defaultObject();
 window.mouse = pug.defaultObject(0);
-window.room = function () {
+
+window.room = false;
+window.search = function () {
   //return '1';
   return location.search.replace('?', '');
 }
 
-function start(room) {
+function start(rooom) {
   $('#menu')[0].remove();
+  window.room = rooom;
   socket.emit('joinRoom', room);
   window.canvas = document.createElement("canvas");
   canvas.height = $(window).height().roundTo(game.grid);
@@ -102,9 +105,9 @@ document.onkeydown = function (e) {
 
 };
 window.onload = function(e){
-  if (room()) {
+  if (search()) {
     //alert('a');
-    start(room());
+    start(search());
   }
 }
 
