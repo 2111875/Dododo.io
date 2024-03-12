@@ -6,10 +6,18 @@ game.map = {
   rows: 4,
   tsize: 64,
   tiles: [
-    [1,2,3,4,5,6,7,8],
-    [9,10,11,12,13,14,15,16],
-    [17,18,19,20,21,22,23,24],
-    [25,26,27,28,29,30,31,32]
+    [1, 2, 3, 4, 5, 6, 7, 8],
+    [9, 10, 11, 12, 13, 14, 15, 16],
+    [17, 18, 19, 20, 21, 22, 23, 24],
+    [25, 26, 27, 28, 29, 30, 31, 32],
+    [],
+    [6,7,7,7,7,7,8],
+    [14,15,15,15,15,15,16],
+    [14,15,1,2,3,15,16],
+    [14,15,9,10,11,15,16],
+    [14,15,17,18,19,15,16],
+    [14,15,15,15,15,15,16],
+    [22,23,23,23,23,23,24]
   ],
   getTile: function (col, row) {
     return this.tiles[row][col];
@@ -25,7 +33,7 @@ blockTextures.tileMap.src = tile1;
 
 blocksColliders = [
   {
-    id: [203,171],
+    id: [203, 171],
     hitboxes: [{ width: game.grid / 2, height: game.grid, y: 0, x: -1 }],
   }
 
@@ -41,7 +49,7 @@ class Block {
     this.isCollider = blocksColliders.some((item) => {
       if (typeof item.id == 'object') {
         return item.id.includes(id);
-        
+
       } else {
         return item.id == id;
       }
@@ -72,7 +80,7 @@ class Block {
   draw() {
     c.imageSmoothingEnabled = false;
     //this.layer = (this.y < player.y ? 0 : 4);
-    this.layer = [171, 172,138,139,140,141,106,107,108,109,110,111,74,75,76,77,78,79,42,43,44,45].includes(this.id) ? 4 : 0;
+    this.layer = [171, 172, 138, 139, 140, 141, 106, 107, 108, 109, 110, 111, 74, 75, 76, 77, 78, 79, 42, 43, 44, 45].includes(this.id) ? 4 : 0;
     c.save();
     c.translate(
       this.x - game.camera.x + this.width / 2,
