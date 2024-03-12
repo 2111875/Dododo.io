@@ -78,6 +78,9 @@ $('#messageInput')[0].onkeydown = function (e) {
     msgs.scrollTop = msgs.scrollHeight;
     $('#messageInput').val("");
     $('#messageInput').blur();
-
+    canvas.focus();
   }
 }
+$('#msgs').on('click',(e) => {
+  canvas.focus();
+})

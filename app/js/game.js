@@ -6,17 +6,17 @@ game.camera = {};
 game.camera.x = 0;
 game.camera.y = 0;
 window.IsInRoom = false;
-let room = function() {
-  if(!window.IsInRoom) return "NoRoom";
-  return location.search.replace('?','');
+let room = function () {
+  if (!window.IsInRoom) return "NoRoom";
+  return location.search.replace('?', '');
 }
-Number.prototype.interp = function(y,a) {
+Number.prototype.interp = function (y, a) {
   a *= game.time;
   return this * (1 - a) + y * a;
 }
 let canvas = document.createElement("canvas");
 canvas.height = $(window).height().roundTo(game.grid);
-
+canvas.tabIndex = 1;
 canvas.width = ((canvas.height * 16) / 9).roundTo(game.grid);
 game.width = canvas.width;
 game.height = canvas.height;
@@ -35,27 +35,29 @@ window.keyBindings = {
   }
 };
 document.onmousemove = function (e) {
-  mouse.x = e.x-parseFloat($(canvas).offset().left)+.5;
-  mouse.y = e.y-parseFloat($(canvas).offset().top);
+  mouse.x = e.x - parseFloat($(canvas).offset().left) + .5;
+  mouse.y = e.y - parseFloat($(canvas).offset().top);
   mouse.down = e.buttons;
 };
-document.oncontextmenu = function(e) {
+document.oncontextmenu = function (e) {
   e.preventDefault();
 }
 document.onmousedown = document.onmousemove;
 document.onmouseup = document.onmousedown;
 
+canvas.focus();
 canvas.onkeydown = function (e) {
   window.key[e.key] = true;
 }
 document.onkeydown = function (e) {
-  window.key[e.key] = true;
-  if(e.key == 't') {
+  // if(document.activeElement != document.getElementById('messageInput')) 
+  if (e.key == 't' && document.activeElement !== document.getElementById('messageInput')) {
     $('#messageInput').focus();
-  }
-  if(e.key == 'g') {
+    e.preventDefault(); // Prevent the default action of the 't' key
+ }
+  if (e.key == 'g') {
     window.IsInRoom = true;
-    socket.emit('joinRoom',room());
+    socket.emit('joinRoom', room());
   }
 
 
@@ -63,12 +65,18 @@ document.onkeydown = function (e) {
 };
 
 //socket.emit('joinRoom',room());
-
+window.onblur = function(e) {
+  for(let key in window.key) {
+    if (window.key.hasOwnProperty(key)) {
+      window.key[key] = false;
+    }
+  }
+}
 document.onkeyup = function (e) {
   window.key[e.key] = false;
 };
 window.isTouching = function (obj1, obj2) {
-  if(obj2 == undefined) {
+  if (obj2 == undefined) {
     return;
   }
   let accuracy = 0.2;
