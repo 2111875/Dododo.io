@@ -28,8 +28,15 @@ io.on('connection', function(socket){
     console.log('A user with id: '+socket.id+' joined room: '+room);
     rooms[room] ? rooms[room]++ : rooms[room] = 1;
     console.log('Amount of players in room \"'+room+'\": '+rooms[room]);
-    io.to(room).emit('message','Somebody joined the game');
+    io.to(room).emit('message','Teddy LOVES FEET');
+    if(rooms[room] == 1) {
+      socket.emit('meHost',room);
+    }
   })
+
+  socket.on('gameStart',(room) => {
+    io.to(room).emit('gameStart',room);
+  }) 
   socket.on("player", function(message,room){
     socket.to(room).emit("player", message);
    // console.log(message);

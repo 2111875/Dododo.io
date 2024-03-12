@@ -9,6 +9,7 @@ window.key = pug.defaultObject();
 window.mouse = pug.defaultObject(0);
 
 window.room = false;
+
 window.search = function () {
   //return '1';
   return location.search.replace('?', '');
@@ -17,38 +18,50 @@ function waiting(rooom) {
   $('#startMenu')[0].remove();
   window.room = rooom;
   socket.emit('joinRoom', room);
-  document.body.appendChild($(`<div id='waitingMenu' class='menu'></div>`)[0]);
+  document.body.appendChild($(`<div id='waitingMenu' class='menu'>Send this link to your friends!<a onclick='navigator.clipboard.writeText(location+"?"+room);'>${location+'?'+room}</a></div>`)[0]);
   $('#waitingMenu').append(`<input id='usernameInput' placeholder='Username?'><button id='waitingJoinBtn'>Join</button>`);
   $('#waitingJoinBtn').hide();
-  $('#waitingJoinBtn').slideDown();
 
-  $('#usernameInput').css('width',400-$('#waitingJoinBtn').width()-28);
-  $('#usernameInput').on('input',function(e) {
+  $('#usernameInput').css('width', 400 - $('#waitingJoinBtn').width() - 28);
+  $('#usernameInput').on('input', function (e) {
     window.username = $('#usernameInput').val();
   })
   $('#waitingMenu').append(`<div id='waitingChatBox'></div><input id='waitingInputBox' placeholder='Message'>`);
-  $('#waitingJoinBtn').on('click',function(e) {
-    if(window.username) {
+  $('#waitingJoinBtn').on('click', function (e) {
+    if (window.username) {
       start();
     } else {
       alert('please input valid username');
     }
   })
-  $('#waitingInputBox').on('keydown',function(e) {
-    if(e.key =='Enter') {
-      socket.emit('message',username+':'+$('#waitingInputBox').val(),room);
+  $('#waitingInputBox').on('keydown', function (e) {
+    if (e.key == 'Enter') {
+      socket.emit('message', username + ':' + $('#waitingInputBox').val(), room);
       $('#waitingInputBox').val("");
     }
   })
-  socket.on('message',(message) => {
-    $('#waitingChatBox').append(message+'<br>');
+  socket.on('message', (message) => {
+    $('#waitingChatBox').append(message + '<br>');
     $('#waitingChatBox')[0].scrollTop = $('#waitingChatBox')[0].scrollHeight;
   })
-  //start();
+  socket.on('meHost', (e) => {
+    $('#waitingMenu').append(`<button id='hostButton'>Start Match</button>`);
+    $('#hostButton').on('click', (item) => {
+      socket.emit('gameStart', room);
+      $('#hostButton').slideUp('normal',() => {$('#hostButton')[0].remove()});
+    })
+  })
+  socket.on('gameStart', (e) => {
+    $('#waitingJoinBtn').slideDown();
+  })
+  document.body.appendChild($(`<button id='leaveButton' onclick=" confirm('Are you sure you want to leave?') ? location.search = '' : null;">Leave</button>`)[0]);
 }
 function start() {
+  $('#leaveButton').remove();
+  socket.off('gameStart');
+  socket.off('meHost');
   socket.off('message');
-  $('#waitingMenu')[0].remove();
+  $('#waitingMenu').remove();
   window.canvas = document.createElement("canvas");
   canvas.height = $(window).height().roundTo(game.grid);
   canvas.tabIndex = 1;
@@ -63,7 +76,13 @@ function start() {
     mouse.y = e.y - parseFloat($(canvas).offset().top);
     mouse.down = e.buttons;
   };
-
+  document.onkeydown = function (e) {
+    // if(document.activeElement != document.getElementById('messageInput')) 
+    if (e.key == 't' && document.activeElement !== document.getElementById('messageInput')) {
+      $('#messageInput').focus();
+      e.preventDefault(); // Prevent the default action of the 't' key
+    }
+  };
   document.onmousedown = document.onmousemove;
   document.onmouseup = document.onmousedown;
 
@@ -97,9 +116,9 @@ function start() {
       let mainScript = document.createElement('script');
       mainScript.src = "./js/main.js";
       document.documentElement.appendChild(mainScript);
-      mainScript.onload = function(e) {
+      mainScript.onload = function (e) {
         document.body.appendChild($(`<button id='leaveButton'>Leave</button>`)[0]);
-        $('#leaveButton').click(function(e) {
+        $('#leaveButton').click(function (e) {
           confirm('Are you sure you want to leave?') ? location.search = '' : null;
         })
       }
@@ -124,18 +143,17 @@ window.keyBindings = {
   }
 };
 
-document.onkeydown = function (e) {
-  // if(document.activeElement != document.getElementById('messageInput')) 
-  if (e.key == 't' && document.activeElement !== document.getElementById('messageInput')) {
-    $('#messageInput').focus();
-    e.preventDefault(); // Prevent the default action of the 't' key
-  }
-};
-window.onload = function(e){
+
+window.onload = function (e) {
   if (search()) {
     //alert('a');
     waiting(search());
   }
+  $('#roomToJoin').on('keydown',(e) => {
+    if(e.key == 'Enter') {
+      waiting($('#roomToJoin').val());
+    }
+  })
 }
 
 //socket.emit('joinRoom',room());
