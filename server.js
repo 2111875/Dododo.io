@@ -23,18 +23,29 @@ let rooms = {};
 io.on('connection', function(socket){
 
   console.log('A user joined with id: '+socket.id);
-  socket.on("joinRoom",(room) => {
+  socket.on("joinRoom",(room,username,callback) => {
+    if(!rooms[room] ?? true) rooms[room] = {players:0,started:false};
+     if(rooms[room].started) {
+      callback('Started');
+      return};
     socket.join(room);
-    console.log('A user with id: '+socket.id+' joined room: '+room);
-    rooms[room] ? rooms[room]++ : rooms[room] = 1;
-    console.log('Amount of players in room \"'+room+'\": '+rooms[room]);
-    io.to(room).emit('message','Teddy LOVES FEET');
-    if(rooms[room] == 1) {
-      socket.emit('meHost',room);
+    //console.log('A user with id: '+socket.id+' joined room: '+room);
+    rooms[room].players++
+   // console.log('Amount of players in room \"'+room+'\": '+rooms[room].players);
+    io.to(room).emit('message',`${username} Joined The Game`);
+    console.log(rooms);
+    if(rooms[room].players == 1) {
+      callback('Host');
+    } else {
+      callback('Player')
     }
   })
 
   socket.on('gameStart',(room) => {
+    rooms[room].started = true;
+    console.log(rooms);
+    console.log(rooms[room].started);
+    //rooms[room].started = true;
     io.to(room).emit('gameStart',room);
   }) 
   socket.on("player", function(message,room){
@@ -47,7 +58,12 @@ io.on('connection', function(socket){
   socket.on('leave',function(uuid,room)  {
     socket.to(room).emit('leave',uuid);
     socket.leave(room);
-    rooms[room]--;
+    if(!rooms[room] ?? true) return;
+    rooms[room].players--;
+    if(rooms[room].players < 1) {
+      rooms[room].started = false;
+      rooms[room].players = 0;
+    }
   })
   
 })

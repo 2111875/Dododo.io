@@ -3,7 +3,7 @@ class Player {
     this.hitbox = pug.defaultObject(0);
 
     this.hitbox.width = w;
-    this.hitbox.height = h * 0.4;
+    this.hitbox.height = h * 0.3;
     this._height = h;
     this._width = w;
 
@@ -26,9 +26,7 @@ class Player {
 
     //keybinds
     document.addEventListener("keydown", async (e) => {
-     if(e.key == 'u') {
-      this.name = prompt('Username?');
-     }
+     
      });
     //costumes
     this.costumes = [];
@@ -46,7 +44,7 @@ class Player {
   }
   set height(h) {
     this._height = h;
-    this.hitbox.height = h * 0.4;
+    this.hitbox.height = h * 0.3;
   }
   get height() {
     return this._height;

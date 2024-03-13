@@ -16,22 +16,31 @@ window.search = function () {
   //return '1';
   return location.search.replace('?', '');
 }
-function waiting(rooom) {
+function waiting(rooom,user) {
+  window.username = user;
+  window.room = rooom;
+  socket.emit('joinRoom', room,username, function(outcome) {
+    if(outcome == 'Host') {
+    $('#waitingMenu').append(`<button id='hostButton'>Start Match</button>`);
+    $('#hostButton').on('click', (item) => {
+      socket.emit('gameStart', room);
+      $('#hostButton').slideUp('normal',() => {$('#hostButton')[0].remove()});
+    })
+  } else if(outcome == 'Started') {
+    alert('Game already started!');
+  }
+  });
   window.onbeforeunload = function () {
     socket.emit('leave', uuid, room);
     player = undefined;
   }
   $('#startMenu')[0].remove();
-  window.room = rooom;
-  socket.emit('joinRoom', room);
   document.body.appendChild($(`<div id='waitingMenu' class='menu'>Send this link to your friends!<a onclick='navigator.clipboard.writeText(location+"?"+room);'>${location+'?'+room}</a></div>`)[0]);
-  $('#waitingMenu').append(`<input id='usernameInput' placeholder='Username?'><button id='waitingJoinBtn'>Join</button>`);
+  $('#waitingMenu').append(`<button id='waitingJoinBtn'>Join</button>`);
   $('#waitingJoinBtn').hide();
 
-  $('#usernameInput').css('width', 400 - $('#waitingJoinBtn').width() - 28);
-  $('#usernameInput').on('input', function (e) {
-    window.username = $('#usernameInput').val();
-  })
+  $('#usernameInput').css('width', 400 - $('#waitingJoinBtn').width() - 28);  
+  
   $('#waitingMenu').append(`<div id='waitingChatBox'></div><input id='waitingInputBox' placeholder='Message'>`);
   $('#waitingJoinBtn').on('click', function (e) {
     if (window.username) {
@@ -49,13 +58,6 @@ function waiting(rooom) {
   socket.on('message', (message) => {
     $('#waitingChatBox').append(message + '<br>');
     $('#waitingChatBox')[0].scrollTop = $('#waitingChatBox')[0].scrollHeight;
-  })
-  socket.on('meHost', (e) => {
-    $('#waitingMenu').append(`<button id='hostButton'>Start Match</button>`);
-    $('#hostButton').on('click', (item) => {
-      socket.emit('gameStart', room);
-      $('#hostButton').slideUp('normal',() => {$('#hostButton')[0].remove()});
-    })
   })
   socket.on('gameStart', (e) => {
     $('#waitingJoinBtn').slideDown();
@@ -158,7 +160,7 @@ window.onload = function (e) {
   }
   $('#roomToJoin').on('keydown',(e) => {
     if(e.key == 'Enter') {
-      waiting($('#roomToJoin').val());
+      waiting($('#roomToJoin').val(),$('#usernameInput').val());
     }
   })
 }
