@@ -65,6 +65,7 @@ io.on('connection', function(socket){
    io.to(room).emit("message",msg);
   })
   socket.on('leave',function(uuid)  {
+    console.log('A user left with id: '+socket.id)
     let room = Array.from(socket.rooms)[1];
     socket.to(room).emit('leave',uuid);
     socket.leave(room);

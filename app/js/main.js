@@ -58,20 +58,25 @@ socket.on('player', (message) => {
 
 })
 socket.on("message", (msg) => {
-  $('#msgs').append('<br>' + msg);
+  let element = document.createElement('p');
+  $(element).text(msg);
+  $('#msgs').append(element);
   let msgs = $('#msgs')[0];
   msgs.scrollTop = msgs.scrollHeight;
 })
 socket.on('leave', (uuid) => {
+  $('#msgs').append('<br>' + otherplayers[uuid].name+" Left For The Milk Like Your Dad");
+  let msgs = $('#msgs')[0];
+  msgs.scrollTop = msgs.scrollHeight;
   delete otherplayers[uuid];  
 })
 window.onbeforeunload = function () {
-  socket.emit('leave', uuid, room);
+  socket.emit('leave', uuid);
   player = undefined;
 }
 $('#messageInput')[0].onkeydown = function (e) {
   if (e.key == 'Enter') {
-    socket.emit('message',player.name+':'+ $('#messageInput').val(), room);
+    socket.emit('message',player.name+':'+ $('#messageInput').val());
     /*$('#msgs').append('<br>' + $('#messageInput').val());
     let msgs = $('#msgs')[0];
     msgs.scrollTop = msgs.scrollHeight;*/

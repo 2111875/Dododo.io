@@ -9,7 +9,6 @@ window.key = pug.defaultObject();
 window.mouse = pug.defaultObject(0);
 window.uuid = crypto.randomUUID();
 
-
 window.room = false;
 
 let pingTime = new Date();
@@ -26,6 +25,7 @@ socket.on('ping',() => {
   ping = (new Date()) - (pingTime);
   $('#pingCounter').text(ping+'ms')
 })
+
 window.search = function () {
   //return '1';
   return location.search.replace('?', '');
@@ -45,10 +45,6 @@ function waiting(rooom,user) {
     location.reload();
   }
   });
-  window.onbeforeunload = function () {
-    socket.emit('leave', uuid, room);
-    player = undefined;
-  }
   $('#startMenu')[0].remove();
   document.body.appendChild($(`<div id='waitingMenu' class='menu'>Send this link to your friends!<a onclick='navigator.clipboard.writeText(location+"?"+room);'>${location+'?'+room}</a></div>`)[0]);
   $('#waitingMenu').append(`<button id='waitingJoinBtn'>Join</button>`);
@@ -66,7 +62,7 @@ function waiting(rooom,user) {
   })
   $('#waitingInputBox').on('keydown', function (e) {
     if (e.key == 'Enter') {
-      socket.emit('message', username + ':' + $('#waitingInputBox').val(), room);
+      socket.emit('message', username + ':' + $('#waitingInputBox').val());
       $('#waitingInputBox').val("");
     }
   })
