@@ -24,6 +24,7 @@
 </head>
 
 <body>
+  <p id='pingCounter'></p>
   <div id="startMenu" class="menu">
     <input id='usernameInput' placeholder='Username?'><input id='roomToJoin' placeholder="Room To Join"><button id="startButton" onclick="if($('#usernameInput').val()) {waiting($('#roomToJoin').val(),$('#usernameInput').val())} else {alert('Please input valid username')}">Start</button>
   </div>

@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto';
+  tab-size: 4;
+}
 :root {
   --bg: #111;
   --border: #999;
@@ -35,6 +39,14 @@
 }
 #usernameInput {
   width:calc(80%);
+}
+#pingCounter {
+  position: fixed;
+  z-index:100000;
+  top:5px;
+  right:5px;
+  background-color: #111;
+  border-radius: 50%;
 }
 #waitingChatBox {
   height:200px;
@@ -74,10 +86,7 @@ canvas:focus {
 .icon:active {
   transform: scale(1);
 }
-* {
-  font-family: 'Roboto';
-  tab-size: 4;
-}
+
 nav {
   box-shadow: 0px 0px 5px #999;
   border-radius: 500px;

@@ -12,6 +12,20 @@ window.uuid = crypto.randomUUID();
 
 window.room = false;
 
+let pingTime = new Date();
+let ping = 0;
+async function getPingLoop() {
+  pingTime = new Date();
+  socket.emit('ping');
+  await sleep(1000);
+  getPingLoop();
+
+}
+getPingLoop();
+socket.on('ping',() => {
+  ping = (new Date()) - (pingTime);
+  $('#pingCounter').text(ping+'ms')
+})
 window.search = function () {
   //return '1';
   return location.search.replace('?', '');
@@ -28,6 +42,7 @@ function waiting(rooom,user) {
     })
   } else if(outcome == 'Started') {
     alert('Game already started!');
+    location.reload();
   }
   });
   window.onbeforeunload = function () {
